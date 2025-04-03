@@ -25,10 +25,13 @@
   "homepage": "https://github.com/Lxsong77/web-app#readme",
   "dependencies": {
     "axios": "^1.8.4",
+    "connect-mongo": "^5.1.0",
+    "connect-redis": "^8.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
+    "redis": "^4.7.0",
     "uuid": "^11.1.0"
   }
 }
