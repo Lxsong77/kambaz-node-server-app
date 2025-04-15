@@ -29,32 +29,41 @@ const corsOptions =
         credentials: true,
       }
     : {
-        origin: function (origin, callback) {
-          const allowedOrigins = [
-            process.env.NETLIFY_URL,
-          ];
-          if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-          } else {
-            callback(new Error("Not allowed by CORS"));
-          }
-        },
+        origin: [
+          process.env.NETLIFY_URL,
+          "https://kanbas-react-web-app-candice.netlify.app",
+        ],
         credentials: true,
       };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Handle preflight requests
+
+// const sessionOptions = {
+//   secret: process.env.SESSION_SECRET || "kambaz",
+//   resave: false,
+//   saveUninitialized: false,
+// };
+// if (process.env.NODE_ENV !== "development") {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: "none",
+//     secure: true,
+//     domain: process.env.NODE_SERVER_DOMAIN,
+//   };
+// }
+// app.use(session(sessionOptions));
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    sameSite: "none",
+    secure: true,
+  },
 };
 if (process.env.NODE_ENV !== "development") {
   sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-    domain: process.env.NODE_SERVER_DOMAIN,
-  };
 }
 app.use(session(sessionOptions));
  
