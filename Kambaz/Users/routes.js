@@ -38,8 +38,6 @@ export default function UserRoutes(app) {
     } else {
       res.status(401).json({ message: "Unable to login. Try again later." });
     }
-    req.session.currentUser = user;
-    res.json(user);
   };
 
   const signout = (req, res) => { 
