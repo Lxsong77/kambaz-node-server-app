@@ -29,50 +29,44 @@ const corsOptions =
         credentials: true,
       }
     : {
-        origin: [
-          process.env.NETLIFY_URL,
-          "https://kanbas-react-web-app-candice.netlify.app",
-        ],
+        origin: function (origin, callback) {
+          const allowedOrigins = [
+            process.env.NETLIFY_URL,
+          ];
+          if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+          } else {
+            callback(new Error("Not allowed by CORS"));
+          }
+        },
         credentials: true,
       };
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handle preflight requests
 
-// const sessionOptions = {
-//   secret: process.env.SESSION_SECRET || "kambaz",
-//   resave: false,
-//   saveUninitialized: false,
-// };
-// if (process.env.NODE_ENV !== "development") {
-//   sessionOptions.proxy = true;
-//   sessionOptions.cookie = {
-//     sameSite: "none",
-//     secure: true,
-//     domain: process.env.NODE_SERVER_DOMAIN,
-//   };
-// }
-// app.use(session(sessionOptions));
 const sessionOptions = {
-  secret: process.env.SESSION_SECRET || "kambaz",
+  secret: process.env.SESSION_SECRET || "kanbaz",
   resave: false,
   saveUninitialized: false,
-  cookie: {
-    sameSite: "none",
-    secure: true,
-  },
 };
 if (process.env.NODE_ENV !== "development") {
   sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+    domain: process.env.NODE_SERVER_DOMAIN,
+  };
 }
-app.use(session(sessionOptions));
- 
+
 function debugMiddleware(req, res, next) {
   console.log("Request URL:", req.url);
   console.log("Request Method:", req.method);
   console.log("Request Body:", req.body);
   next();
 }
+
+
+app.use(session(sessionOptions));
 
 
 app.use(express.json());
