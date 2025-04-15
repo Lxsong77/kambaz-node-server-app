@@ -57,8 +57,17 @@ if (process.env.NODE_ENV !== "development") {
   };
 }
 app.use(session(sessionOptions));
-  
+ 
+function debugMiddleware(req, res, next) {
+  console.log("Request URL:", req.url);
+  console.log("Request Method:", req.method);
+  console.log("Request Body:", req.body);
+  next();
+}
+
+
 app.use(express.json());
+app.use(debugMiddleware)
 UserRoutes(app);
 EnrollmentsRoutes(app);
 CourseRoutes(app);
