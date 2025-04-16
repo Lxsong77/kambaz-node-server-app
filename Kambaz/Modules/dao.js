@@ -1,5 +1,6 @@
-import Database from "../Database/index.js";
+//import Database from "../Database/index.js";
 import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
 // export function updateModule(moduleId, moduleUpdates) {
 //   const { modules } = Database;
