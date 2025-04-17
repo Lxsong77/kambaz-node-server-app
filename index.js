@@ -13,9 +13,21 @@ import ModuleRoutes from './Kambaz/Modules/route.js';
 import AssignmentRoutes from './Kambaz/Assignment/route.js';
 import "dotenv/config";
 
+// const CONNECTION_STRING = 
+//   process.env.MONGO_CONNECTION_STRING || "mongodb+srv://lixiaotong0923:47pXFJfZ14nQrPVx@kambaz.zqv4quw.mongodb.net/"
+//   mongoose.connect(CONNECTION_STRING).then(() => {
+//     console.log('Connected to MongoDB');
+// })
+
 const CONNECTION_STRING = 
-  process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kambaz"
-mongoose.connect(CONNECTION_STRING);
+  process.env.MONGO_CONNECTION_STRING || "mongodb+srv://lixiaotong0923:47pXFJfZ14nQrPVx@kambaz.zqv4quw.mongodb.net/kambaz?retryWrites=true&w=majority&appName=Kambaz";
+
+mongoose.connect(CONNECTION_STRING)
+  .then(() => {
+  console.log('Connected to MongoDB');
+}).catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
 
 const app = express();
 app.use(
